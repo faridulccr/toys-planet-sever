@@ -68,15 +68,27 @@ const createProduct = (products) => {
         const newProduct = await products.insertOne(req.body);
         // console.log(newProduct);
 
-        newProduct
+        newProduct.acknowledged
             ? res.status(200).json({ message: "product successfully added" })
-            : res.status(404).json({ error: "something is broken" });
+            : res.status(400).json({ error: "Bad Request" });
     };
 };
 
 // update product
 const updateProduct = (products) => {
-    return async (req, res) => {};
+    return async (req, res) => {
+        // Generate a new ObjectId
+        const objectId = new ObjectId(req.params.id);
+        const updatedProduct = await products.insertOne(
+            { _id: objectId },
+            { $set: {} }
+        );
+        // console.log(updateProduct);
+
+        updatedProduct.acknowledged
+            ? res.status(200).json({ message: "product successfully updated" })
+            : res.status(400).json({ error: "Bad Request" });
+    };
 };
 
 // delete product
