@@ -1,30 +1,41 @@
+const { ObjectId } = require("mongodb");
+
 // get all products
 const getAllProducts = (products) => {
     return async (req, res) => {
-        const products = await products.find().toArray();
-        // console.log(products);
+        const allProducts = await products.find().toArray();
+        // console.log(allProducts);
 
-        products.length > 0
-            ? res.status(200).json(products)
-            : res.status(200).json({ message: "data not found" });
+        allProducts.length > 0
+            ? res.status(200).json(allProducts)
+            : res.status(404).json({ message: "data not found" });
     };
 };
 
 // get single product
 const getSingleProduct = (products) => {
     return async (req, res) => {
-        const products = await products.find().toArray();
-        // console.log(products);
+        // Generate a new ObjectId
+        const objectId = new ObjectId(req.params.id);
+        const singleProduct = await products.find({ _id: objectId }).toArray();
+        // console.log(singleProduct);
 
-        products.length > 0
-            ? res.status(200).json(products)
-            : res.status(200).json({ message: "data not found" });
+        singleProduct.length > 0
+            ? res.status(200).json(singleProduct)
+            : res.status(404).json({ message: "data not found" });
     };
 };
 
 // find product by email
 const findProductByEmail = (products) => {
-    return async (req, res) => {};
+    return async (req, res) => {
+        const userProducts = await products.find({ email: req.params.email }).toArray();
+        // console.log(userProducts);
+
+        userProducts.length > 0
+            ? res.status(200).json(userProducts)
+            : res.status(404).json({ message: "data not found" });
+    };
 };
 
 // find product by category
