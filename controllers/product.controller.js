@@ -29,7 +29,9 @@ const getSingleProduct = (products) => {
 // find product by email
 const findProductByEmail = (products) => {
     return async (req, res) => {
-        const userProducts = await products.find({ email: req.params.email }).toArray();
+        const userProducts = await products
+            .find({ email: req.params.email })
+            .toArray();
         // console.log(userProducts);
 
         userProducts.length > 0
@@ -40,7 +42,24 @@ const findProductByEmail = (products) => {
 
 // find product by category
 const findProductByCategory = (products) => {
-    return async (req, res) => {};
+    return async (req, res) => {
+        const sports_cars = await products
+            .find({ category: "sports car" })
+            .toArray();
+        // console.log(sports_cars);
+
+        const trucks = await products.find({ category: "truck" }).toArray();
+        // console.log(trucks);
+
+        const police_cars = await products
+            .find({ category: "police car" })
+            .toArray();
+        // console.log(police_cars);
+
+        sports_cars.length > 0 || trucks.length > 0 || police_cars.length > 0
+            ? res.status(200).json({ sports_cars, trucks, police_cars })
+            : res.status(404).json({ message: "data not found" });
+    };
 };
 
 // create product
