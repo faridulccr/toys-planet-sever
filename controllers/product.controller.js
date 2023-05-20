@@ -79,7 +79,7 @@ const updateProduct = (products) => {
     return async (req, res) => {
         // Generate a new ObjectId
         const objectId = new ObjectId(req.params.id);
-        const updatedProduct = await products.insertOne(
+        const updatedProduct = await products.updateOne(
             { _id: objectId },
             { $set: {} }
         );
@@ -93,7 +93,16 @@ const updateProduct = (products) => {
 
 // delete product
 const deleteProduct = (products) => {
-    return async (req, res) => {};
+    return async (req, res) => {
+        // Generate a new ObjectId
+        const objectId = new ObjectId(req.params.id);
+        const deletedProduct = await products.deleteOne({ _id: objectId });
+        // console.log(deletedProduct);
+
+        deletedProduct.acknowledged
+            ? res.status(200).json({ message: "product successfully deleted" })
+            : res.status(400).json({ error: "Bad Request" });
+    };
 };
 
 module.exports = {
