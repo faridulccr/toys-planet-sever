@@ -65,11 +65,12 @@ const findProductByCategory = (products) => {
 // create product
 const createProduct = (products) => {
     return async (req, res) => {
-        const newUser = await usersCollection.insertOne({
-            name: "farid",
-            age: 28,
-        });
-        res.status(200).json(newUser);
+        const newProduct = await products.insertOne(req.body);
+        // console.log(newProduct);
+
+        newProduct
+            ? res.status(200).json({ message: "product successfully added" })
+            : res.status(404).json({ error: "something is broken" });
     };
 };
 
