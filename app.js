@@ -38,7 +38,10 @@ async function run() {
         app.get("/api/products", getAllProducts(productsCollection));
 
         // get single product
-        app.get("/api/single-product/:id", getSingleProduct(productsCollection));
+        app.get(
+            "/api/single-product/:id",
+            getSingleProduct(productsCollection)
+        );
 
         // find product by email
         app.get(
@@ -59,7 +62,10 @@ async function run() {
         app.put("/api/update-product/:id", updateProduct(productsCollection));
 
         // delete product
-        app.delete("/api/delete-product/:id", deleteProduct(productsCollection));
+        app.delete(
+            "/api/delete-product/:id",
+            deleteProduct(productsCollection)
+        );
 
         // not found error handling
         app.use((req, res, next) => {
@@ -73,6 +79,7 @@ async function run() {
             console.log(err.stack);
             res.status(500).send("something broke");
         });
+        // console.log("connected");
     } finally {
         // Ensures that the client will close when you finish/error
         // await client.close();

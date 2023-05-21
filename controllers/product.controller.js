@@ -3,12 +3,12 @@ const { ObjectId } = require("mongodb");
 // get all products
 const getAllProducts = (products) => {
     return async (req, res) => {
-        const allProducts = await products.find().toArray();
+        const allProducts = await products.find().limit(20).toArray();
         // console.log(allProducts);
 
         allProducts.length > 0
             ? res.status(200).json(allProducts)
-            : res.status(404).json({ message: "data not found" });
+            : res.status(404).json({ error: "data not found" });
     };
 };
 
@@ -21,8 +21,8 @@ const getSingleProduct = (products) => {
         // console.log(singleProduct);
 
         singleProduct.length > 0
-            ? res.status(200).json(singleProduct)
-            : res.status(404).json({ message: "data not found" });
+            ? res.status(200).json(singleProduct[0])
+            : res.status(404).json({ error: "data not found" });
     };
 };
 
@@ -36,7 +36,7 @@ const findProductByEmail = (products) => {
 
         userProducts.length > 0
             ? res.status(200).json(userProducts)
-            : res.status(404).json({ message: "data not found" });
+            : res.status(404).json({ error: "data not found" });
     };
 };
 
@@ -58,7 +58,7 @@ const findProductByCategory = (products) => {
 
         sports_cars.length > 0 || trucks.length > 0 || police_cars.length > 0
             ? res.status(200).json({ sports_cars, trucks, police_cars })
-            : res.status(404).json({ message: "data not found" });
+            : res.status(500).json({ error: "data not found" });
     };
 };
 
