@@ -100,7 +100,7 @@ const deleteProduct = (products) => {
         // console.log(deletedProduct);
 
         deletedProduct.acknowledged
-            ? res.status(200).json({ message: "product successfully deleted" })
+            ? res.status(200).json({ message: "successfully deleted" })
             : res.status(400).json({ error: "Bad Request" });
     };
 };
