@@ -81,12 +81,12 @@ const updateProduct = (products) => {
         const objectId = new ObjectId(req.params.id);
         const updatedProduct = await products.updateOne(
             { _id: objectId },
-            { $set: {} }
+            { $set: { ...req.body } }
         );
-        // console.log(updateProduct);
+        // console.log(updatedProduct);
 
         updatedProduct.acknowledged
-            ? res.status(200).json({ message: "product successfully updated" })
+            ? res.status(200).json({ message: "successfully updated" })
             : res.status(400).json({ error: "Bad Request" });
     };
 };
