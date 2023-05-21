@@ -30,7 +30,8 @@ const client = new MongoClient(process.env.DB_URL, {
 async function run() {
     try {
         // Connect the client to the server	(optional starting in v4.7)
-        await client.connect();
+        // await client.connect();
+        client.connect();
         // create a collection for products in myDB
         const productsCollection = client.db("myDB").collection("products");
 
