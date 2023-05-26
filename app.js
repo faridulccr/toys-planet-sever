@@ -36,6 +36,11 @@ async function run() {
         const productsCollection = client.db("myDB").collection("products");
 
         // get all products
+        app.get("/", (req, res) => {
+            res.status(200).json({ message: "welcome to server" });
+        });
+
+        // get all products
         app.get("/api/products", getAllProducts(productsCollection));
 
         // get single product
